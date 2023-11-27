@@ -40,8 +40,22 @@ def update_grid():
     new_grid = np.zeros_like(grid)
     for y in range(GRID_HEIGHT):
         for x in range(GRID_WIDTH):
-            alive_neighbors = np.sum(grid[y-1:y+2, x-1:x+2]) - grid[y, x]
+            # Calculating the positions of neighbors with wrapping
+            neighbors = [
+                grid[(y - 1) % GRID_HEIGHT, (x - 1) % GRID_WIDTH],  # Top-left
+                grid[(y - 1) % GRID_HEIGHT, x],                      # Top
+                grid[(y - 1) % GRID_HEIGHT, (x + 1) % GRID_WIDTH],  # Top-right
+                grid[y, (x - 1) % GRID_WIDTH],                      # Left
+                grid[y, (x + 1) % GRID_WIDTH],                      # Right
+                grid[(y + 1) % GRID_HEIGHT, (x - 1) % GRID_WIDTH],  # Bottom-left
+                grid[(y + 1) % GRID_HEIGHT, x],                      # Bottom
+                grid[(y + 1) % GRID_HEIGHT, (x + 1) % GRID_WIDTH]   # Bottom-right
+            ]
+            alive_neighbors = sum(neighbors)
+
+            # Apply rules of the automaton
             new_grid[y, x] = alive_neighbors == 3 if not grid[y, x] else alive_neighbors in [2, 3]
+
     grid = new_grid
     step_count += 1
     grid_history.append(grid.copy())
