@@ -82,12 +82,18 @@ def display_ui():
     text_surface = font.render('Random', True, BLACK)
     screen.blit(text_surface, (random_soup_button_rect.x + 15, random_soup_button_rect.y + 10))
 
-    return random_soup_button_rect
+    # Clear Grid button
+    clear_grid_button_rect = pygame.Rect(WIDTH - 220, 20, 100, 40)  # Adjust position as needed
+    pygame.draw.rect(screen, GRAY, clear_grid_button_rect)
+    clear_text_surface = font.render('Clear', True, BLACK)
+    screen.blit(clear_text_surface, (clear_grid_button_rect.x + 25, clear_grid_button_rect.y + 10))
+
+    return random_soup_button_rect, clear_grid_button_rect
 
 # Main loop
 clock = pygame.time.Clock()
 while True:
-    random_soup_button_rect = display_ui()
+    random_soup_button_rect, clear_grid_button_rect = display_ui()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -110,6 +116,12 @@ while True:
             x, y = pygame.mouse.get_pos()
             if random_soup_button_rect.collidepoint(x, y):
                 grid = random_grid()
+                grid_history = [grid.copy()]
+                step_count = 0
+                needs_redraw = True
+            elif clear_grid_button_rect.collidepoint(x, y):
+                # Clear grid
+                grid = empty_grid()
                 grid_history = [grid.copy()]
                 step_count = 0
                 needs_redraw = True
