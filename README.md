@@ -1,3 +1,10 @@
 # PyGoL
 A pygame implementation of Conway's Game of Life, the cellular automaton.
- It has play/pause and step-forward/(limited-)step-backward functionality through the spacebar and arrow keys respectively, place-live-cell functionality by the cursor, and a button which generates a (pseudo-)random soup.
+
+Includes the following functionality:
+Defineable play area and resolution (number of cells)
+Play and pause via spacebar
+Step through simulation forward and backward (while paused) via left and right arrow keys
+"Random" button creates a random soup of cells (while paused)
+"Clear" button erases the grid state (while paused)
+Cursor left-click places a live cell (paused or palying)
